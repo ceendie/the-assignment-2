@@ -1,0 +1,64 @@
+---
+title: "assignment2"
+author: "CINDY BOSUBEN"
+date: '2022-06-20'
+output: html_document
+---
+#This dataset is about thanksgiving for the year 2015,it is stored in a database. It was colllected through a survey called monkeypoll survey where 1058 respondents. It was used to answer here is what Americans eat during thanksgiving. 
+
+
+```{r setup, include = TRUE}
+library(dplyr)
+library(knitr)
+
+```
+
+```{r get data, include = TRUE}
+#using read.csv to read data from csv file from a URL, 
+url <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/thanksgiving-2015/thanksgiving-2015-poll-data.csv"
+  
+Example<- read.csv(url)
+
+#head(Example, 2)
+
+```
+
+```{r clean data, include = TRUE}
+#because there are so many columns, I am going to only pick 5
+Example1 <- Example[,c(1,2,3,4,5)]
+
+NewExample<- arrange(Example1, RespondentID)
+```
+ #This next chunk is inline code
+The original dataframe, Example, has `r nrow(Example)`  rows and `r ncol(Example)` columns. The names of the columns and a brief description of each are in the table below:
+
+This makes a new data.frame called text_tbl with two columns, Names and Description
+```{r, echo = TRUE}
+
+Names = c("ID", "celebration")
+Description = c("RespondentID", "Do you celebrate Thanksgiving") 
+
+text_tbl <- data.frame(Names, Description)
+
+#prints the table
+
+text_tbl
+
+#make the table look pretty
+knitr::kable(text_tbl,"pipe")
+
+```
+
+This will subset the data and give me summary stats
+```{r, echo = TRUE}
+data_pick3 <- select(Example, What.kind.of.stuffing.dressing.do.you.typically.have., What.type.of.cranberry.saucedo.you.typically.have., Do.you.typically.have.gravy.)
+
+Summarytable<-summary(data_pick3)
+#creates the summary
+Summarytable 
+#prints the summary in your output
+
+```
+
+
+
